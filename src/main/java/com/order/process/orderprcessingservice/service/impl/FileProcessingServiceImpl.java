@@ -3,7 +3,8 @@ package com.order.process.orderprcessingservice.service.impl;
 import com.order.process.orderprcessingservice.constant.FileProcessingConstant;
 import com.order.process.orderprcessingservice.service.FileProcessingService;
 import jakarta.annotation.Resource;
-import lombok.extern.slf4j.Slf4j;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.JobExecution;
 import org.springframework.batch.core.JobParameters;
@@ -26,8 +27,9 @@ import java.util.Objects;
 import java.util.Optional;
 
 @Service
-@Slf4j
 public class FileProcessingServiceImpl implements FileProcessingService {
+
+    Logger log  = LogManager.getLogger(FileProcessingServiceImpl.class);
 
     @Resource
     Map<String, String> configMap;

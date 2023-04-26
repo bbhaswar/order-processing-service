@@ -1,0 +1,19 @@
+#go to directory
+place jar
+create docker config file
+
+#check docker images 
+docker images
+
+#check running project
+docker ps 
+
+#build with tag
+docker build -t orderprocessingimage .
+
+#run docker image 
+docker run --name orderprocessingProject -it -d orderprocessingimage
+ 
+#check logs
+docker logs orderprocessingProject
+

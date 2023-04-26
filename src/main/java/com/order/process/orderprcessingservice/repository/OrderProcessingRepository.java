@@ -4,7 +4,6 @@ import com.order.process.orderprcessingservice.entity.Order;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
@@ -12,10 +11,7 @@ import org.springframework.stereotype.Repository;
 import java.time.LocalDate;
 
 @Repository
-public interface OrderProcessingRepository extends JpaRepository<Order,Long>
-        , JpaSpecificationExecutor<Order> {
-        //, PagingAndSortingRepository<Order, Long> {
-
+public interface OrderProcessingRepository extends JpaRepository<Order,Long>{
     Long countByCountry(String country);
 
     @Query(value = "select sum(parcel_weight) from orders where country = :country",nativeQuery = true)

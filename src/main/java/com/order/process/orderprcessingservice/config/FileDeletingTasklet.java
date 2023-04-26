@@ -1,6 +1,7 @@
 package com.order.process.orderprcessingservice.config;
 
-import lombok.extern.slf4j.Slf4j;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.batch.core.StepContribution;
 import org.springframework.batch.core.UnexpectedJobExecutionException;
 import org.springframework.batch.core.scope.context.ChunkContext;
@@ -15,8 +16,9 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 
-@Slf4j
 public class FileDeletingTasklet implements Tasklet, InitializingBean {
+
+    Logger log = LogManager.getLogger(FileDeletingTasklet.class);
 
     private String tempDirectory;
 

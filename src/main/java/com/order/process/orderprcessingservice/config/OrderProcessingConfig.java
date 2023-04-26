@@ -8,7 +8,8 @@ import com.order.process.orderprcessingservice.repository.OrderConfigRepository;
 import com.order.process.orderprcessingservice.repository.OrderProcessingRepository;
 import jakarta.servlet.MultipartConfigElement;
 import lombok.AllArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.Step;
 import org.springframework.batch.core.configuration.annotation.StepScope;
@@ -43,8 +44,9 @@ import java.util.stream.Collectors;
 
 @Configuration
 @AllArgsConstructor
-@Slf4j
 public class OrderProcessingConfig {
+
+    static Logger log = LogManager.getLogger(OrderProcessingConfig.class);
 
     @Autowired
     OrderProcessingRepository orderRepository;

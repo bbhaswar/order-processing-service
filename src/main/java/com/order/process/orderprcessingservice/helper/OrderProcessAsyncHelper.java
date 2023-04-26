@@ -1,15 +1,17 @@
 package com.order.process.orderprcessingservice.helper;
 
 import com.order.process.orderprcessingservice.service.FileProcessingService;
-import lombok.extern.slf4j.Slf4j;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
 @Component
-@Slf4j
 public class OrderProcessAsyncHelper {
+
+    Logger log = LogManager.getLogger(OrderProcessAsyncHelper.class);
 
     @Autowired
     FileProcessingService fileProcessingService;

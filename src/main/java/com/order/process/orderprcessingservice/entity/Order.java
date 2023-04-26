@@ -29,7 +29,7 @@ public class Order {
     @Column(name = "phone_number")
     private String phoneNumber;
 
-    @Column(name = "parcel_weight", columnDefinition = "Decimal(10,2)")
+    @Column(name = "parcel_weight", columnDefinition = "NUMERIC(10,2)")
     private Double parcelWeight;
 
     private String country;

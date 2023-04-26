@@ -9,8 +9,8 @@ import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.scheduling.annotation.EnableScheduling;
 
 @SpringBootApplication
-@OpenAPIDefinition(info = @Info(title = "Port API",version = "1.0", description = "API to provide information on port"))
-@Slf4j
+@OpenAPIDefinition(info = @Info(title = "Order Processing API",
+		version = "1.0", description = "API to provide information on order and process files"))
 @EnableAsync
 @EnableScheduling
 public class OrderProcessingServiceApplication {
