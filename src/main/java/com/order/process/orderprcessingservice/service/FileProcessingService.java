@@ -4,5 +4,5 @@ import org.springframework.web.multipart.MultipartFile;
 
 public interface FileProcessingService {
 
-    void processOrderFile(MultipartFile multipartFile);
+    void processOrderFile(MultipartFile multipartFile, boolean isScheduler);
 }

@@ -1,0 +1,19 @@
+-- Table: public.orders
+
+-- DROP TABLE IF EXISTS public.orders;
+
+CREATE TABLE IF NOT EXISTS public.orders
+(
+    id bigint NOT NULL,
+    country character varying(255) COLLATE pg_catalog."default",
+    creation_date date,
+    email character varying(255) COLLATE pg_catalog."default",
+    parcel_weight numeric(10,2),
+    phone_number character varying(255) COLLATE pg_catalog."default",
+    CONSTRAINT orders_pkey PRIMARY KEY (id)
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS public.orders
+    OWNER to postgres;

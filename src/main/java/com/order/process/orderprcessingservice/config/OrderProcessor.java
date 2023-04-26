@@ -5,6 +5,7 @@ import jakarta.annotation.Resource;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.batch.item.ItemProcessor;
 
+import java.time.LocalDate;
 import java.util.Map;
 import java.util.regex.Pattern;
 
@@ -26,6 +27,7 @@ public class OrderProcessor implements ItemProcessor<Order, Order> {
 
             item.setCountry(country);
         }
+        item.setCreationDate(LocalDate.now());
 
         return item;
     }

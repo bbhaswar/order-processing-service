@@ -18,6 +18,6 @@ public class OrderProcessAsyncHelper {
     public void startBatchProcessing(MultipartFile multipartFile) {
 
         log.info("Starting async batch job operation");
-        fileProcessingService.processOrderFile(multipartFile);
+        fileProcessingService.processOrderFile(multipartFile,false);
     }
 }

@@ -1,0 +1,8 @@
+
+INSERT INTO
+    public.order_config (name, value)
+VALUES
+	('file.temp.directory', 'C:/Users/bbhas/source/order-processing-service/temp'),
+	('file.processed.directory', 'C:/Users/bbhas/source/order-processing-service/processed'),
+	('multipart.max.file.size', '104857600L'),
+	('multipart.max.request.size', '104857600L');

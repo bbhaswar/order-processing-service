@@ -1,0 +1,15 @@
+-- Table: public.order_config
+
+-- DROP TABLE IF EXISTS public.order_config;
+
+CREATE TABLE IF NOT EXISTS public.order_config
+(
+    name character varying(255) COLLATE pg_catalog."default" NOT NULL,
+    value character varying(255) COLLATE pg_catalog."default",
+    CONSTRAINT order_config_pkey PRIMARY KEY (name)
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS public.order_config
+    OWNER to postgres;
