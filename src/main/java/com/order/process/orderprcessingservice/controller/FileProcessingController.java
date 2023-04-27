@@ -27,7 +27,7 @@ public class FileProcessingController {
     @Autowired
     OrderProcessAsyncHelper helper;
 
-    @Operation(summary = "Uploads a csv file", description = "Upload csv file for processing")
+    @Operation(summary = "Uploads a csv file", description = "Upload csv file for processing.")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "File started processing",
                     content = @Content),

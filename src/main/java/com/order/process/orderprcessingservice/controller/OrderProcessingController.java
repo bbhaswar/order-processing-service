@@ -51,7 +51,7 @@ public class OrderProcessingController {
                             schema = @Schema(implementation = OrderProcessingResponse.class)) }),
             @ApiResponse(responseCode = "400", description = "Bad request",
                     content = @Content),
-            @ApiResponse(responseCode = "500", description = "Internal Server Error",
+            @ApiResponse(responseCode = "500", description = "Internal Server Error.",
                     content = @Content) })
     @GetMapping(value = "/fetch/order", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<OrderProcessingResponse> fetchOrder(
