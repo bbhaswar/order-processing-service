@@ -7,12 +7,12 @@
         </Console>
         <SplunkHttp
                 name="splunkhttp"
-                url="http://localhost:8088"
-                token="ed8aa7f8-1196-4cb0-bd73-247183c8bbb2"
+                url="xxxxxx"
+                token="xxxxxxxx"
                 host="localhost"
-                index="order_processing_service_api_dev"
+                index="xxxxxx"
                 type="raw"
-                source="http-event-order-logs"
+                source="xxxxxx"
                 sourcetype="log4j"
                 messageFormat="text"
                 disableCertificateValidation="true">
