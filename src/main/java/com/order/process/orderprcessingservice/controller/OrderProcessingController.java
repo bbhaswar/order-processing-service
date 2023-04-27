@@ -3,7 +3,15 @@ package com.order.process.orderprcessingservice.controller;
 import com.order.process.orderprcessingservice.entity.Order;
 import com.order.process.orderprcessingservice.helper.OrderProcessHelper;
 import com.order.process.orderprcessingservice.request.OrderRequestFilter;
+import com.order.process.orderprcessingservice.response.CountrySpecificResponse;
+import com.order.process.orderprcessingservice.response.OrderProcessingResponse;
 import com.order.process.orderprcessingservice.service.OrderProcessingService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -36,13 +44,34 @@ public class OrderProcessingController {
     @Autowired
     OrderProcessingService service;
 
+    @Operation(summary = "Fetch order details", description = "Fetch order details based on optional filters")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Successfully Acquired Order details",
+                    content = { @Content(mediaType = "application/json",
+                            schema = @Schema(implementation = OrderProcessingResponse.class)) }),
+            @ApiResponse(responseCode = "400", description = "Bad request",
+                    content = @Content),
+            @ApiResponse(responseCode = "500", description = "Internal Server Error",
+                    content = @Content) })
     @GetMapping(value = "/fetch/order", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> fetchOrder(
+    public ResponseEntity<OrderProcessingResponse> fetchOrder(
+
+            @Parameter(description = "Order id", example = "1")
             @RequestParam(value = "id",required = false) Long id,
+
+            @Parameter(description = "Email id associated with order", example = "email3@email.com")
             @RequestParam(value = "email",required = false) String email,
+
+            @Parameter(description = "Phone number associated with order", example = "256 217813782")
             @RequestParam(value = "phoneNumber",required = false) String phoneNumber,
+
+            @Parameter(description = "Parcel weight of order", example = "12.24")
             @RequestParam(value = "parcelWeight",required = false) String parcelWeight,
+
+            @Parameter(description = "Country of order", example = "Uganda")
             @RequestParam(value = "country",required = false) String country,
+
+            @Parameter(description = "Order creation date", example = "2023-04-27")
             @RequestParam(value = "creationDate",required = false) String creationDate,
             @RequestParam(defaultValue = "0") Integer pageNo,
             @RequestParam(defaultValue = "10") Integer pageSize,
@@ -93,8 +122,20 @@ public class OrderProcessingController {
         }
     }
 
+
+    @Operation(summary = "Total weight by country",description = "Fetch total weight based on country")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Successfully fetched total weight by country",
+                    content = { @Content(mediaType = "application/json",
+                            schema = @Schema(implementation = CountrySpecificResponse.class)) }),
+            @ApiResponse(responseCode = "400", description = "Bad request",
+                    content = @Content),
+            @ApiResponse(responseCode = "500", description = "Internal Server Error",
+                    content = @Content) })
     @GetMapping("/fetch/parcel-weight/country/{country}")
-    public ResponseEntity<?> getTotalWeightByCountry(@PathVariable(value = "country") String country) {
+    public ResponseEntity<CountrySpecificResponse> getTotalWeightByCountry(
+            @Parameter(description = "Country for which total weight of order is needed", example = "Uganda")
+            @PathVariable(value = "country") String country) {
 
         Instant start = Instant.now();
 
@@ -116,8 +157,20 @@ public class OrderProcessingController {
 
     }
 
+
+    @Operation(summary = "Total order count by country",description = "Fetch total order count based on country")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Successfully fetched total order count by country",
+                    content = { @Content(mediaType = "application/json",
+                            schema = @Schema(implementation = CountrySpecificResponse.class)) }),
+            @ApiResponse(responseCode = "400", description = "Bad request",
+                    content = @Content),
+            @ApiResponse(responseCode = "500", description = "Internal Server Error",
+                    content = @Content) })
     @GetMapping("/fetch/order/count/country/{country}")
-    public ResponseEntity<?> getTotalOrderCountByCountry(@PathVariable(value = "country") String country) {
+    public ResponseEntity<CountrySpecificResponse> getTotalOrderCountByCountry(
+            @Parameter(description = "Country for which total order count is needed", example = "Uganda")
+            @PathVariable(value = "country") String country) {
 
         Instant start = Instant.now();
 
