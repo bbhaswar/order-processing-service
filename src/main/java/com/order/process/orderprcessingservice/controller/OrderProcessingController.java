@@ -32,6 +32,7 @@ import java.time.Duration;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 
 
 @RestController
@@ -103,7 +104,8 @@ public class OrderProcessingController {
 
             Page<Order> pageableResponse = service.fetchOrderDetails(requestFilter, pageable);
 
-            int numberOfRecord = pageableResponse.getSize();
+            int numberOfRecord = Optional.ofNullable(pageableResponse).map(Page::getContent)
+                    .map(List::size).orElse(0);
 
             if (numberOfRecord == 0) {
                 log.info("No record found");
@@ -118,7 +120,7 @@ public class OrderProcessingController {
             log.error("Exception occurred", e);
             return ResponseEntity.internalServerError()
                     .body(orderProcessHelper.buildFailureResponse(durationInMillis(start),
-                            "Exception Occurred while fetch order"));
+                            "Exception Occurred while fetching order details"));
         }
     }
 
@@ -152,7 +154,7 @@ public class OrderProcessingController {
             log.error("Exception occurred", e);
             return ResponseEntity.internalServerError()
                     .body(orderProcessHelper.buildFailureResponse(durationInMillis(start),
-                            "Exception Occurred while fetch order", country));
+                            "Exception Occurred while fetching total order weight", country));
         }
 
     }
@@ -187,7 +189,7 @@ public class OrderProcessingController {
             log.error("Exception occurred", e);
             return ResponseEntity.internalServerError()
                     .body(orderProcessHelper.buildFailureResponse(durationInMillis(start),
-                            "Exception Occurred while fetch order", country));
+                            "Exception Occurred while fetching total order count", country));
         }
 
     }

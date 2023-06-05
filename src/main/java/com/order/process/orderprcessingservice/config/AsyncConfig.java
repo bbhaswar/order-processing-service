@@ -9,7 +9,7 @@ import java.util.concurrent.Executor;
 @Configuration
 public class AsyncConfig {
 
-    @Bean
+    @Bean(name = "orderProcessingAsyncExecutor")
     public Executor orderProcessingAsyncExecutor(){
 
         ThreadPoolTaskExecutor executor = new ThreadPoolTaskExecutor();

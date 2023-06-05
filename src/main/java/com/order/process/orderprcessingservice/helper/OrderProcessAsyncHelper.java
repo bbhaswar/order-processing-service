@@ -17,9 +17,9 @@ public class OrderProcessAsyncHelper {
     FileProcessingService fileProcessingService;
 
     @Async("orderProcessingAsyncExecutor")
-    public void startBatchProcessing(MultipartFile multipartFile) {
+    public void startProcessing(MultipartFile multipartFile) {
 
         log.info("Starting async batch job operation");
-        fileProcessingService.processOrderFile(multipartFile,false);
+        fileProcessingService.processOrderFile(multipartFile);
     }
 }

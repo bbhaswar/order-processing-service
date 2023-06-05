@@ -5,6 +5,7 @@ import jakarta.annotation.Resource;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.tomcat.util.http.fileupload.impl.SizeLimitExceededException;
+import org.springframework.context.annotation.Profile;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -16,6 +17,7 @@ import java.util.concurrent.TimeoutException;
 
 @RestControllerAdvice
 @Component
+@Profile("!test-integration")
 public class GlobalExceptionHandler {
 
     Logger log = LogManager.getLogger(GlobalExceptionHandler.class);

@@ -3,6 +3,7 @@ package com.order.process.orderprcessingservice.service.impl;
 import com.order.process.orderprcessingservice.constant.FileProcessingConstant;
 import com.order.process.orderprcessingservice.service.FileProcessingService;
 import jakarta.annotation.Resource;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.batch.core.Job;
@@ -20,6 +21,12 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
+import java.nio.file.Files;
+import java.nio.file.NoSuchFileException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.Map;
@@ -41,27 +48,58 @@ public class FileProcessingServiceImpl implements FileProcessingService {
     private Job job;
 
     @Override
-    public void processOrderFile(MultipartFile multipartFile, boolean isScheduler) {
+    public void processOrderFile(MultipartFile multipartFile) {
+
+        InputStream inputStream = null;
         try {
-            File fileToImport;
-            String tempStorageFileName;
             String tempStoragePath = configMap.get(FileProcessingConstant.FILE_TEMP_DIRECTORY);
-            if(multipartFile == null && isScheduler){
-                fileToImport = getLatestFile();
-                if(fileToImport ==  null){
-                    log.info("No file available for processing");
-                    return;
+
+            log.info("Processing file shared via api");
+            String originalFileName = multipartFile.getOriginalFilename();
+            String tempStorageFileName = tempStoragePath + File.separator + originalFileName;
+            File fileToImport = new File(tempStorageFileName);
+           // multipartFile.transferTo(fileToImport);
+
+            inputStream = multipartFile.getInputStream();
+            Path destinationPath = Paths.get(tempStorageFileName);
+            Files.createDirectories(destinationPath.getParent());
+            Files.copy(inputStream, destinationPath, StandardCopyOption.REPLACE_EXISTING);
+
+            startExecution(tempStorageFileName);
+
+        } catch (NoSuchFileException e) {
+            log.error("Destination directory does not exist", e);
+        } catch (IOException e) {
+            log.error("An error occurred while copying the file: " + e.getMessage());
+        } finally {
+            if (inputStream != null) {
+                try {
+                    inputStream.close();
+                } catch (IOException e) {
+                    log.error("An error occurred while closing the input stream.", e);
                 }
-                tempStorageFileName = fileToImport.getAbsolutePath();
-
-            } else {
-                log.info("Processing file shared via api");
-                String originalFileName = multipartFile.getOriginalFilename();
-                tempStorageFileName = tempStoragePath + File.separator + originalFileName;
-                fileToImport = new File(tempStorageFileName);
-                multipartFile.transferTo(fileToImport);
             }
+        }
+    }
 
+    @Override
+    public void processOrderFileForScheduler(){
+        try {
+            log.info("Processing file for scheduler");
+            File fileToImport = getLatestFile();
+            if (fileToImport == null) {
+                log.info("No file available for processing");
+                return;
+            }
+            String tempStorageFileName = fileToImport.getAbsolutePath();
+            startExecution(tempStorageFileName);
+        }catch (Exception e){
+            log.error("Exception Occurred while processing file for scheduler", e);
+        }
+    }
+
+    public void startExecution(String tempStorageFileName){
+            try{
             JobParameters jobParameters = new JobParametersBuilder()
                     .addString("fullPathFileName", tempStorageFileName)
                     .addLong("startAt", System.currentTimeMillis()).toJobParameters();
@@ -71,14 +109,17 @@ public class FileProcessingServiceImpl implements FileProcessingService {
 
             log.info("Status::"+ execution.getExitStatus());
 
-        } catch (IOException | JobExecutionAlreadyRunningException | JobRestartException | JobInstanceAlreadyCompleteException |
+        } catch (JobExecutionAlreadyRunningException | JobRestartException | JobInstanceAlreadyCompleteException |
                  JobParametersInvalidException e) {
             log.error("Exception Occurred", e);
         }
     }
 
-    private File getLatestFile() {
+    public File getLatestFile() {
         String directoryPath = configMap.get(FileProcessingConstant.FILE_TEMP_DIRECTORY);
+        if(StringUtils.isBlank(directoryPath)){
+           return null;
+        }
         File dir = new File(directoryPath);
         if (dir.isDirectory()) {
             Optional<File> opFile = Arrays.stream(Objects.requireNonNull(dir.listFiles(File::isFile)))

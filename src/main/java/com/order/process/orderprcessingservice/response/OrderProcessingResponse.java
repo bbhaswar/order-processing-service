@@ -8,13 +8,14 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.data.domain.Pageable;
 
+import java.io.Serializable;
 import java.util.List;
 
 @Data
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class OrderProcessingResponse {
+public class OrderProcessingResponse implements Serializable {
 
     CommonResponse meta;
 

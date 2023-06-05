@@ -34,6 +34,10 @@ public class OrderProcessingServiceImpl implements OrderProcessingService {
                 requestFilter.getCreationDate(),
                 pageable);
 
+        if(pageableOrderList == null){
+            log.info("No record found based on provided request filter");
+            return null;
+        }
         log.info("Acquired pageable order list with ::{} records",pageableOrderList.getSize());
         return pageableOrderList;
     }

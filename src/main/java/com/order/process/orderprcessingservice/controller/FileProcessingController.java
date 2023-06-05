@@ -6,6 +6,7 @@ import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import jakarta.annotation.Nullable;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,6 +38,7 @@ public class FileProcessingController {
                     content = @Content) })
     @PostMapping(value ="/process/order",consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
     public ResponseEntity<String> processOrder(
+            @Nullable
             @Parameter(description = "File to be processed")
             @RequestParam(value = "file",required = false) MultipartFile multipartFile) {
 
@@ -44,7 +46,7 @@ public class FileProcessingController {
         if(multipartFile ==null){
             return ResponseEntity.ok().body("Invalid file format received as input is null");
         }
-        helper.startBatchProcessing(multipartFile);
+        helper.startProcessing(multipartFile);
 
         return ResponseEntity.ok().body("Started processing on file");
     }

@@ -16,11 +16,12 @@ public class OrderProcessScheduler {
     @Autowired
     FileProcessingService fileProcessingService;
     Logger log = LogManager.getLogger(OrderProcessScheduler.class);
+
     @Scheduled(cron = "*/20 * * * * *")
     public void launchJob(){
         try {
             log.info("Starting cron job for file processing");
-            fileProcessingService.processOrderFile(null, true);
+            fileProcessingService.processOrderFileForScheduler();
             log.info("Successfully processed file");
         }catch (Exception e){
             log.error("Exception occurred while while processing file -{}", LocalDateTime.now(), e);

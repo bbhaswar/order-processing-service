@@ -1,0 +1,18 @@
+id, email, phone_number, parcel_weight
+1, email1@email.com, 237 209993809,24.45
+2, email2@email.com, 258 852828436,1.33
+3, email3@email.com, 256 217813782,15.16
+4, email4@email.com,251511056331,9.73
+5, email5@email.com, 251 543636241,13.93
+6, email6@email.com, 256 347564232,1.27
+7, email7@email.com,256720708096,8.71
+8, email8@email.com,256727281921,1.42
+9, email9@email.com,256286610566,12.55
+10, email10@email.com,212828477226,14.4
+11, email11@email.com, 256 261244331,7.11
+12, email12@email.com, 256 645845997,11.2
+13, email13@email.com, 256 395356404,12.73
+14, email14@email.com,251252567912,9.4
+15, email15@email.com, 258 87127423,3.69
+16, email16@email.com, 212 905608793,20.09
+17, email17@email.com, 251 935247656,3.49
