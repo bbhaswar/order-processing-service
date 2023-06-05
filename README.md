@@ -5,3 +5,9 @@ The service can consume the file from both API as well as a scheduled bacth job.
 
 Swagger is also implemented for api documentation.
 swagged api is available at http://localhost:8090/swagger-ui/index.html
+
+As part of testing added unit test and integration test case. Also configured jacoco report. Configuration and other DTO objects has been excluded from the report.
+
+Jacoco report coverage for test cases
+
+![img.png](img.png)
